@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+# -*-coding: utf-8 -*-
+#Copyright (c) 2017 Iecas Inc. All rights reserved.
+#edit by zdh 
+#
+#we need git, so read it
+#http://www.liaoxuefeng.com/  --To Git
+#pro git  https://git-scm.com/book/zh/v2
+
+
+USAGE = """
+帮助必须会搞  要不谁都记不住
+git二级帮助  git xxx -help eg:  git init -help    git ITEM --help HTML支持
+
+初始化
+git init
+
+先设置  
+不懂有啥 可以先查 
+git config --list  可以查看所有的配置参数
+
+git config --global user.name "Your Name"            --名字
+git config --global user.email "email@example.com"   --邮箱
+--global 代表所有仓库名字
+
+
+检查HEAD
+git checkout  实际上是在控制HEAD指向的位置
+git checkout <branch name> <SHAcode>
+
+"""
+
+
+
+搞错了回退  一定要记住SHA码
+git log -g -n   查询一共搞了几条commit  并找到SHA
+git reset --hard HEAD~X  X代表之前X条  HEAD代表版本指针
+或者
+git reset --hard HEAD "SHA码"
+所以 还是 rebase  有记录的好
+
+
+
+自动管理文件
+.gitignore  忽略方案————支持glob正则表达式
+"""

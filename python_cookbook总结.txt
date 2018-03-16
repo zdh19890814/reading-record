@@ -1,0 +1,127 @@
+#!usr/bin/env -python
+#-*-coding utf-8 -*-
+
+一、数据结构和算法
+1、元素分解   （XX，xx,_,……）用赋值操作，可以用*表达式作未知个数的元素分解
+2、collections 库 
+    计数器(Counter) 支持数学运算符（+ -）
+    双向队列(deque)  可以固定长度 保留固定长度值
+    默认字典(defaultdict)  快速构建复杂字典，解决多值字典
+    有序字典(OrderedDict)   解决字典无序输入/输出问题  开销大（双向链表）
+    可命名元组(namedtuple) 实例看起来像一个普通的类实例，但是满足tuple所有操作              
+        命名元组另一个用途就是作为字典的替代，比字典更高效，但是无法更改
+    字典链(ChainMap)  多个字典合并 相同以第一个为准 
+                                   相比update 不破坏原有字典
+
+3、heapq  有序堆  解决多个最值和优先级排列 
+4、字典有关计算 如果值优先 可以用zip重新组合（组合成值——键）再比较
+    若多条目相同，以后一个值 比较结果为标准eg:(value-key)if 1.values=2.values                                            check 1.keys & 2.keys    
+   字典操作 字典的(keys,items)变量允许 集合操作 
+                            （&（交集） |（并集） -（差集））
+                            values不可以 因为值不一定唯一的
+
+5、用set和yield 解决重复值问题，（set add添加保证无重复，yield保证输入通用性）
+
+6、用slice解决 切片值命名问题  slice(start,stop,step)
+                               username = slice(a,b) 
+                               test[a:b] == test[slice(a,b)]==test[username]
+
+7、sorted() &sort()排序 keys支持lambda表达式，operator.itemgetter.attrgetter等参数
+                        二者可以互换 但后者速度更快
+
+8、itertools 库
+    groupby   返回一个按指定键值排列的 分组 迭代库 groupby(迭代对象，key=指定条目)
+                                                   return(条目名称， 分组后的item)
+
+9、推导式 分列表推导式（list）和字典推导式（dict）
+    s = [k for k, g in groupby('AAAABBBCCDAABBB')]
+    p1 = {key: value for key, value in prices.items() if value > 200}  
+
+
+二、字符串和文本操作
+1、正则表达式应用(re)
+   split      re.split(r'[;,\s]\s*', line)   []非捕获,()内部捕获
+   match      re.match(r'', line) 字符串开头寻找
+   findall    re.findall(r'', line) 整个文本搜索 列表返回
+   finditer   re.finditer(r'', line)  整个文本搜索 迭代返回
+   sub        re.sub(r'(\d+)/(\d+)/(\d+)', r'\3-\1-\2', text)
+              第一个参数是被匹配的模式，第二个参数是替换模式。反斜杠数字比如 \3 指向前面模式的捕获组号。
+   
+   compile    re.compile(r'') 预存编译式 上述括号中添加:参数flags=re.IGNORECASE忽略大小写，参数re.DOTALL，让(.)字符匹配包括换行所有字符 == (.|\n)
+              scanner()  字符串解析为令牌流: 
+              1)?P<TOKENNAME> 确定令牌化格式，eg:TIMES = r'(?P<TIMES>\*)'
+              2)testmatch=re.compile('|'.join([XXX,XXX,XXX]))组合令牌化编译值
+              3)test=testmatch.scanner('argc') 做好对应值扫描 eg:scanner = master_pat.scanner('foo = 42')
+              4)test.match()产生iter对象 XX.lastgroup, XX.group()输出值
+              for m in iter(test.match) m.lastgroup, m.group()
+2、str函数    startswith/endswith解决str首尾匹配值 
+              find解决str查找
+              strip('str')lstrip('str')rstrip('str')删除 左右 左 右 指定字符 默认空格  
+              replace( , )替换
+              upper() lower()  大写  小写
+              translate(ans)  高级替换 先制定ans替换字典
+              ljust(),rjust(),center() format()  {xx}.format(xx = n)
+              join()
+              
+3、unicodedata 将文本统一Unicode规范表示 
+               normalize('style','str') 统一格式化
+               combining('str')对类型做比较
+               cmb_chrs = dict.fromkeys(c for c in range(sys.maxunicode)if unicodedata.combining(chr(c)))
+
+4、textwrap    解决格式化长串字符串问题
+
+ 
+三、数字日期和时间
+1、数字
+    round(number, ndigits) 取整，可以带一个取整位，可以被format替代
+    decimal.Decimal  精确小数计算， 或者用math函数进行精确计算
+    bin() oct() hex() complex()复数，cmath，复数函数操作  
+    fractions.Fraction  分数运算
+    numpy 大型数组操作 解决高等线性代数问题
+    random模块  自带一系列随机数操作（读取，设定，特定随机方式等）
+    
+    
+2、时间日期
+    datetime模块
+        datetime  标准时间值
+        tiemdelta 差值
+    
+    dateutil模块 复杂时间日期问题
+    pytz 模块 处理时区
+
+四、迭代器与生成器
+1、迭代器iter：只能被访问一次：
+        手动访问   next()
+        自行构建   iter() 或者重定义__iter__ 函数
+        反向迭代   reverse() 或者实现__reverse__ 方法
+            反向迭代仅仅当对象的大小可预先确定或者对象实现了 __reversed__() 的特殊方法时才能生效。 如果两者都不符合，那你必须先将对象转换为一个列表才行
+
+        itertools  模块
+            islice 解决迭代器无固定长度无法迭代的问题 但是会消耗提供的数据    
+            dropwhile  解决迭代过滤问题 
+            排列组合迭代 permutations combinations
+            chain 一次迭代多个序列
+            
+        iter()函数接收一个可选的callable对象和一个标记(结尾)值
+        迭代中会不断调用callable对象，直到返回与标记值相等为止
+            eg:for chunk in iter(lambda: s.recv(CHUNKSIZE), b''):
+2、生成器yield       被迭代调用 自行保留当前状态 
+        yield from  调用其他函数或嵌套迭代
+            eg: def depth_first(self): 
+                    yield self
+                    for c in self:
+                        yield from c.depth_first()
+            可以解决递归问题
+                (yield from 产生数据迭代，判断语句负责终止条件)
+        
+        管道机制 yield——数据产生者 iter迭代——数据消费者 应用程序——驱动者
+
+        
+3、enumerate()  返回一个有索引的 iterable对象
+
+4、zip  多种数据组合
+
+5、heapq.merge() 排序后迭代输出
+
+五、文件与IO
+1、with控制块  解决文件自动关闭的问题

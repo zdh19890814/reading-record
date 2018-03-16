@@ -1,0 +1,144 @@
+#!/usr/bin/env python
+# -*-coding: utf-8 -*-
+#Copyright (c) 2017 Iecas Inc. All rights reserved.
+#edit by zdh 
+#
+# A Little JAVA ，So much Pattern
+#
+
+
+USAGE = """
+1st:
+    When specifying a collection of data,
+    use abstract classes for datatypes and 
+    extended classes for variants.
+
+1、当使用指定数据集合时，用抽象类作为数据类型
+    用拓展类作为变量
+
+2nd:
+    When writing a function over a datatype,
+
+    place a method in each of the variants that make up the datatype.
+
+    If a field of a variant belongs to the same datatype,
+
+    the method may call the corresponding method of the field in
+
+    computing the function.
+
+2、当通过数据类型编写函数时，
+
+    在构成数据类型的每个变体中放置一个方法。
+
+    如果变体的字段属于相同的数据类型，
+
+    该方法可以调用该字段的相应方法
+
+    实现功能。
+
+
+3rd:When writing a function that returns values of a datatype,
+
+    use new to create these values.
+    
+3、当编写返回数据类型值的函数时，
+    使用新建来创建这些值。
+
+
+
+        访问者模式
+4th:When writing several functions for the
+
+    same self-referential datatype, use
+
+    visitor protocols so that all methods for
+
+    a function can be found in a single class.
+    
+4、在几个函数具有相同的自引用数据类型的时候
+    使用访问者协议框架
+    使所有方法为一个函数并可以在一个类中找到。
+
+5th：竟然没了。。自己概括一个 没英文原句  以后有更好的处理方式
+    
+    
+5、当对不同的访问元素（eg:fish）具有一系列相似的访问操作时(eg:rem)，
+    可以用object对操作进行抽象集成(fish,num -> object o)
+    但是 要做好不同元素的比较条件（eg: equal Num/fish）
+
+6th:  When the additional consumed values
+
+    change for a self-referenced use of a
+
+    visitor, don’t forget to create a new visitor.  
+    
+6、访问者模式
+    1  没有新的接口实例，取代之为 抽象类中的参数
+    2  this简化访问者指向
+    3  interface 登场， 集成所有元素操作，
+        区别于普通元素的继承，访问者的实现是public
+        对于元素的访问操作，由访问者实例统一操作
+        （eg:abstract PieD accept(PieVisitorI ask)）
+    4  (翻译6th)当额外的操作改变了访问者的自引用使用，
+        不要忘记创建新的访问者。（不能用原有this，需要new）    
+    示例图：
+              PIE          ------   accept ------      PIEVISITOR
+             继承                                       实行（都要有实现）
+        BOT          TOP                       REM                SUB    
+
+    （JAVA extend  implement）   
+
+7th:When designing visitor protocols for
+
+    many different types, create a unifying
+
+    protocol using Object .    
+    
+7、  访问者接口返回有不同类型时，创建一个统一的OBJECT接口
+    但是要做好类型转换
+    
+8th:When extending a class, use overriding to enrich its functionality. 
+
+8、  访问类（visitor implement）也可以继承 
+    super（）继承父类参数
+    解决了访问需求多样性问题
+    
+9th：If a datatype may have to be extended,
+    be forward looking and use a
+    constructor-like (overridable) method
+    so that visitors can be extended, too.
+    
+9、 如果一个数据类型可能需要扩展，
+    可以前瞻性地使用一个（可覆盖的）方法的构造函数，
+    以便访问者也可以被扩展。  
+
+          shape           ----accept----          shapevisitor
+          继承                                    接口
+                                          接口继承（不实现）
+    circle  trans  union  ----accept----unionvisitor  
+                                          实现 
+                       继承实现           HasPt
+                      unionHasPt
+    
+10th:When modifcations to objects are
+
+    needed, use a class to insulate the
+
+    operations that modify objects.
+
+    Otherwise, beware the consequences of
+
+    your actions. 
+
+
+9、当需要对对象进行修改时，请使用类来隔离修改对象的操作。
+    否则，请注意您的操作的后果。    
+    
+    
+    从 this that操作理解
+    pie                           pieman                     pievisitor
+    class  accept                interface                   interface
+    top-bot ask.()           生成pie实例  接收参数         执行操作  接收中间类参数(pieman->that)  
+    
+"""      
