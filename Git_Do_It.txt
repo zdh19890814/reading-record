@@ -28,18 +28,30 @@ git config --global user.email "email@example.com"   --邮箱
 git checkout  实际上是在控制HEAD指向的位置
 git checkout <branch name> <SHAcode>
 
-"""
-
 
 
 搞错了回退  一定要记住SHA码
 git log -g -n   查询一共搞了几条commit  并找到SHA
+git log --oneline 一行显示log
 git reset --hard HEAD~X  X代表之前X条  HEAD代表版本指针
 或者
 git reset --hard HEAD "SHA码"
+git checkout . #本地所有修改的。没有的提交的，都返回到原来的状态
+git stash  #把所有没有提交的修改暂存到stash里面。可用git stash pop回复。
+git reset --hard HASH #返回到某个节点，不保留修改。
+git reset --soft HASH#返回到某个节点。保留修改 
 所以 还是 rebase  有记录的好
 
+git rm -r --cached ./ #删除本地cached缓存
 
+git push origin 会一次提交多个HEAD解决方案
+		Git的分支合并主要依赖于checkout命令和cherry-pick 命令。cherry-pick就是从不同的分支中捡出一个单独的commit，并把它和你当前的分支合并。
+    如果你以并行方式在处理两个或以上分支，你可能会发现一个在全部分支中都有的bug,如果你在一个分支中解决了它，
+    你可以使用cherry-pick命令把它commit到其它分支上去，而不会弄乱其他的文件或commit。
+
+		1、新建一个branch 绑定远程 git checkout -b XXX --track origin/master
+		2、git cherry-pick {hash-id}  将本地master的code提交到该分支上
+		3、git push origin HEAD:refs/for/master 提交到远程master
 
 自动管理文件
 .gitignore  忽略方案————支持glob正则表达式
